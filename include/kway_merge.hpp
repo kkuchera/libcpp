@@ -2,7 +2,6 @@
 #define KWAY_MERGE_HPP
 
 #include <algorithm>
-#include <functional>
 
 template <typename I, typename O, typename Compare>
 // requires I is a RandomAccessIterator
@@ -11,13 +10,14 @@ template <typename I, typename O, typename Compare>
 // requires get<0>(ValueType(I)) is first InputIterator
 // requires get<1>(ValueType(I)) is last InputIterator
 auto kway_merge(I first, I last, O out, Compare cmp) {
-  std::make_heap(first, last, std::not_fn(cmp));
+  const auto tcmp = [&](const auto &x, const auto &y) { return cmp(y, x); };
+  std::make_heap(first, last, tcmp);
   while (first != last) {
-    std::pop_heap(first, last, std::not_fn(cmp));
+    std::pop_heap(first, last, tcmp);
     const auto min = last - 1;
     *out++ = *std::get<0>(*min)++;
     if (std::get<0>(*min) != std::get<1>(*min)) {
-      std::push_heap(first, last, std::not_fn(cmp));
+      std::push_heap(first, last, tcmp);
     } else {
       --last;
     }
@@ -31,7 +31,7 @@ template <typename I, typename O>
 // requires get<0>(ValueType(I)) is first InputIterator
 // requires get<1>(ValueType(I)) is last InputIterator
 auto kway_merge(I first, I last, O out) {
-  auto less = [](const auto &x, const auto &y) {
+  const auto less = [](const auto &x, const auto &y) {
     return *std::get<0>(x) < *std::get<0>(y);
   };
   return kway_merge(first, last, out, less);
