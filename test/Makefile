@@ -5,6 +5,7 @@ INCLUDE = -I../include/
 BINDIR = bin
 
 default: $(BINDIR)/test_kway_merge \
+	$(BINDIR)/test_lru_cache \
 	$(BINDIR)/test_unique_fd \
 	$(BINDIR)/test_zipper
 
