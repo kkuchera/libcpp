@@ -10,13 +10,14 @@ template <typename I, typename O, typename Compare>
 // requires get<0>(ValueType(I)) is first InputIterator
 // requires get<1>(ValueType(I)) is last InputIterator
 auto kway_merge(I first, I last, O out, Compare cmp) {
-  const auto tcmp = [&](const auto &x, const auto &y) { return cmp(y, x); };
+  const auto tcmp = [&](const auto& x, const auto& y) { return cmp(y, x); };
   std::make_heap(first, last, tcmp);
   while (first != last) {
     std::pop_heap(first, last, tcmp);
     const auto min = last - 1;
-    *out++ = *std::get<0>(*min)++;
-    if (std::get<0>(*min) != std::get<1>(*min)) {
+    using std::get;
+    *out++ = *get<0>(*min)++;
+    if (get<0>(*min) != get<1>(*min)) {
       std::push_heap(first, last, tcmp);
     } else {
       --last;
@@ -31,8 +32,9 @@ template <typename I, typename O>
 // requires get<0>(ValueType(I)) is first InputIterator
 // requires get<1>(ValueType(I)) is last InputIterator
 auto kway_merge(I first, I last, O out) {
-  const auto less = [](const auto &x, const auto &y) {
-    return *std::get<0>(x) < *std::get<0>(y);
+  const auto less = [](const auto& x, const auto& y) {
+    using std::get;
+    return *get<0>(x) < *get<0>(y);
   };
   return kway_merge(first, last, out, less);
 }
