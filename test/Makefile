@@ -4,7 +4,8 @@ LDFLAGS = -lgtest -lgtest_main -pthread
 INCLUDE = -I../include/
 BINDIR = bin
 
-default: $(BINDIR)/test_kway_merge
+default: $(BINDIR)/test_kway_merge \
+	$(BINDIR)/test_unique_fd
 
 $(BINDIR)/%: %.cpp
 	@mkdir -p $(BINDIR)
