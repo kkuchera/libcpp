@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -pedantic -Werror
+CXXFLAGS = -std=c++20 -Wall -Wextra -pedantic -Werror
 LDFLAGS = -lgtest -lgtest_main -pthread
 INCLUDE = -I../include/
 BINDIR = bin
