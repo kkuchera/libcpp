@@ -5,7 +5,8 @@ INCLUDE = -I../include/
 BINDIR = bin
 
 default: $(BINDIR)/test_kway_merge \
-	$(BINDIR)/test_unique_fd
+	$(BINDIR)/test_unique_fd \
+	$(BINDIR)/test_zipper
 
 $(BINDIR)/%: %.cpp
 	@mkdir -p $(BINDIR)
